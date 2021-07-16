@@ -1,0 +1,40 @@
+#include<stdio.h>
+#include<windows.h>
+#include<stdlib.h>
+#include<string.h>
+int PU(char QQ[])
+{
+	return strlen(QQ);
+}
+void PI(char QQ[])
+{
+	int t, i = 0;
+	char WW[80] = "0";
+	t = PU(QQ);
+	do
+	{
+		if (i > 0)
+			i++;
+		while (QQ[i] != ' ' && QQ[i] != '\0')
+		{
+			WW[i] = QQ[i];
+			i++;
+		}
+		WW[i] = QQ[i];
+		puts(WW);
+		Sleep(250);
+		if (i == t)
+			Sleep(50);
+		system("cls");
+	} while (i <= t);
+}
+int main()
+{
+	char AA[] = "My happiness can only be you !";
+	char BB[] = "I love you but you don\'t know !";
+	char CC[] = "I want to meet someone who can\'t do without me !";
+	char DD[] = "I thought you\'d be sad if i ignored you,i was overnking it !";
+	PI(AA);         PI(BB);           PI(CC);          PI(DD);
+	puts(AA);     Sleep(200);    puts(BB);      Sleep(200);     puts(CC);     Sleep(200);     puts(DD);  Sleep(8000);
+	return 0;
+}
