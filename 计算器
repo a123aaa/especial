@@ -1,0 +1,45 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<math.h>
+int add(int a, int b)
+{
+	return a + b;
+}
+int sub(int a, int b)
+{
+	return a - b;
+}
+int mul(int a, int b)
+{
+	return a * b;
+}
+int div(int a, int b)
+{
+	return a / b;
+}
+int sur(int a, int b)
+{
+	return a % b;
+}
+int Pow(int a, int b)
+{
+	return pow(a, b);
+}
+int main()
+{
+	int a, b,input;
+	printf("1.a+b   2.a-b   3.a*b\n");
+	printf("4.a/b   5.a/b的余数   6.a的b次方\n");
+	do	
+	{
+		printf("请输入想要计算的类型序列号，输入'0'退出程序\n");
+		scanf("%d", &input);
+		if (input == 0)
+			break;
+		printf("依次输入a和b\n");
+		scanf("%d%d", &a, &b);
+		int(*p[])(int, int) = { 0,add,sub,mul,div,sur,Pow };
+		printf("%d\n", p[input](a, b));
+	} while (input);
+	return 0;
+}
