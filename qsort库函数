@@ -1,0 +1,57 @@
+#include<stdio.h>
+#include<string.h>
+struct stu
+{
+	char name[10];
+	int  age;
+};
+int cmp_int(const void* a,const void* b)
+{
+	return *(int*)a - *(int*)b;
+}
+float cmp_float(const void* a,const void* b)
+{
+	return *(float*)a - *(float*)b;
+}
+int cmp_char(const void* a, const void* b)
+{
+	return *(char*)a - *(char*)b;
+}
+int cmp_arr_age(const void* a, const void* b)
+{
+	return ((struct stu*)a)->age - ((struct stu*)b)->age;
+}
+int cmp_arr_name(const void* a, const void* b)
+{
+	return strcmp(((struct stu*)a)->name , ((struct stu*)b)->name);
+}
+void Swap(char* a, char* b, int width)
+{
+	for (int i = 0; i < width; i++)
+	{
+		char c = *a;
+		*a++ = *b;
+		*b++= c;
+	}
+}
+void Qsort(void* base, int sz, int width, int (*cmp)(void* a, void* b))
+{
+	for (int i = 0; i < sz-1; i++)
+ 		for (int j = 0; j < sz - i - 1; j++)
+			if (cmp((char*)base + j * width, (char*)base + (j + 1) * width) > 0)
+				Swap((char*)base + j * width, (char*)base + (j + 1) * width, width);
+}
+
+int main()
+ {
+	int a[] = { 2,65,78,21,4,6,78,3,66 };
+	int sz = sizeof(a) / sizeof(a[0]);
+	Qsort(a, sz, sizeof(a[0]), cmp_int);
+	for (int i = 0; i < sz; i++)
+		printf("%d ", a[i]);
+	struct stu arr[3] = { "Liming",15,"Zhangyang",18,"Xiaoniu",12 };
+	 sz = sizeof(arr) / sizeof(arr[0]);
+	Qsort(arr, sz, sizeof(arr[0]), cmp_arr_name);
+	Qsort(arr, sz, sizeof(arr[0]), cmp_arr_age);;
+	return 0;
+}
