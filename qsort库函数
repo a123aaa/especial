@@ -1,57 +1,28 @@
 #include<stdio.h>
 #include<string.h>
-struct stu
+struct stu{  char name[10];  int  age;  };
+int cmp_int(const void* a,const void* b)    //比较整数大小{  return *(int*)a - *(int*)b;  }
+int cmp_float(const void* a,const void* b)  //比较浮点型{  return *(float*)a - *(float*)b;  }
+int cmp_char(const void* a, const void* b)  //比较字符型{  return *(char*)a - *(char*)b;  }
+int cmp_arr_age(const void* a, const void* b)  //比较结构体整形{  return ((struct stu*)a)->age - ((struct stu*)b)->age;  }
+int cmp_arr_name(const void* a, const void* b)  //比较结构体字符串型{  return strcmp(((struct stu*)a)->name , ((struct stu*)b)->name);  }
+void Swap(char* a, char* b, int width) //a和b是该数据的第一个字节，width是该数据的字节总数
 {
-	char name[10];
-	int  age;
-};
-int cmp_int(const void* a,const void* b)
-{
-	return *(int*)a - *(int*)b;
-}
-float cmp_float(const void* a,const void* b)
-{
-	return *(float*)a - *(float*)b;
-}
-int cmp_char(const void* a, const void* b)
-{
-	return *(char*)a - *(char*)b;
-}
-int cmp_arr_age(const void* a, const void* b)
-{
-	return ((struct stu*)a)->age - ((struct stu*)b)->age;
-}
-int cmp_arr_name(const void* a, const void* b)
-{
-	return strcmp(((struct stu*)a)->name , ((struct stu*)b)->name);
-}
-void Swap(char* a, char* b, int width)
-{
-	for (int i = 0; i < width; i++)
-	{
+	for (int i = 0; i < width; i++){
 		char c = *a;
 		*a++ = *b;
-		*b++= c;
-	}
-}
-void Qsort(void* base, int sz, int width, int (*cmp)(void* a, void* b))
+		*b++= c;}}
+void Qsort(void* base, int num, int width, int (*cmp)(void* a, void* b))   // int (*cmp)(void* a, void* b)是函数指针
 {
-	for (int i = 0; i < sz-1; i++)
- 		for (int j = 0; j < sz - i - 1; j++)
-			if (cmp((char*)base + j * width, (char*)base + (j + 1) * width) > 0)
-				Swap((char*)base + j * width, (char*)base + (j + 1) * width, width);
-}
-
-int main()
- {
-	int a[] = { 2,65,78,21,4,6,78,3,66 };
-	int sz = sizeof(a) / sizeof(a[0]);
-	Qsort(a, sz, sizeof(a[0]), cmp_int);
-	for (int i = 0; i < sz; i++)
-		printf("%d ", a[i]);
+	for (int i = 0; i < num-1; i++)
+ 		for (int j = 0; j < num - i - 1; j++)
+			if (cmp((char*)base + j * width, (char*)base + (j + 1) * width) > 0)    //用cmp指针比较数据大小
+				Swap((char*)base + j * width, (char*)base + (j + 1) * width, width);}  //传递两数据首地址和字节大小
+int main(){
+	Qsort(a, num, sizeof(a[0]), cmp_int);      //qsort(素组名，元素个数，每个元素大小，比较函数)  比较函数返回类型必须为整形，执行完qsort后函数由小到大排列
 	struct stu arr[3] = { "Liming",15,"Zhangyang",18,"Xiaoniu",12 };
-	 sz = sizeof(arr) / sizeof(arr[0]);
-	Qsort(arr, sz, sizeof(arr[0]), cmp_arr_name);
-	Qsort(arr, sz, sizeof(arr[0]), cmp_arr_age);;
+	num = sizeof(arr) / sizeof(arr[0]);
+	Qsort(arr, num, sizeof(arr[0]), cmp_arr_name);
+	Qsort(arr, num, sizeof(arr[0]), cmp_arr_age);
 	return 0;
 }
